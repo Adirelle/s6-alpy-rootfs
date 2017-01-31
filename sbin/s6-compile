@@ -1,13 +1,17 @@
 #!/bin/execlineb -P
-cd /etc/s6-rc
+define BASE /etc/s6-rc
+
 getpid N
-backtick -n PREV { readlink compiled }
+backtick -n PREV { readlink ${BASE}/compiled }
+
 multisubstitute {
 	import -u N
 	import -u PREV
 }
-define NEW compiled.${N}
-if { s6-rc-compile ${NEW} source }
-if { ln -snf ${NEW} compiled }
-s6-rmrf ${PREV}
+
+define NEW ${BASE}/compiled.${N}
+
+if { s6-rc-compile ${NEW} ${BASE}/source }
+foreground { ln -snf ${NEW} ${BASE}/compiled }
+echo ${NEW}
 
