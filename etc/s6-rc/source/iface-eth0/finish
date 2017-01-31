@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+s6-envdir env
+export interface IFACE
+foreground { data/script deconfig }
+ifconfig ${IFACE} down

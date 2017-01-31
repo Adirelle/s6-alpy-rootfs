@@ -1,0 +1,8 @@
+#!/bin/execlineb -P
+s6-envdir env
+multisubstitute {
+	import HOSTNAME
+	import -u IFACE
+}
+if { ifconfig $IFACE up }
+udhcpc -f -i $IFACE -F $HOSTNAME -s data/script

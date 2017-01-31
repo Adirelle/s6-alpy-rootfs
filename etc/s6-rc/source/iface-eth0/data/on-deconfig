@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+import -ui interface
+foreground { ifconfig ${interface} 0.0.0.0 }
+./clear-routes dev ${interface}
+
