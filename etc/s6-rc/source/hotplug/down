@@ -1,0 +1,2 @@
+redirfd -w 1 /proc/sys/kernel/hotplug
+s6-echo

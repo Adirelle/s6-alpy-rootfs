@@ -1,0 +1,7 @@
+foreground {
+	elglob -s0 FILES /etc/sysctl.d/*.conf
+	forx FILE { $FILES }
+	import -u FILE
+	sysctl -p $FILE
+}
+sysctl -p /etc/sysctl.conf

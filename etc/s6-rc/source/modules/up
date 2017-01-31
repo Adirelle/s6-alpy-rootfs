@@ -1,0 +1,6 @@
+backtick -ni MODULES {
+	elglob -s0 CONFD /etc/modules-load.d/*
+	cat /etc/modules ${CONFD}
+}
+import -su MODULES
+modprobe -av ${MODULES}
