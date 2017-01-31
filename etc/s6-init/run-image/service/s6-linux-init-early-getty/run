@@ -1,3 +1,0 @@
-#!/bin/execlineb -P
-cd /
-/sbin/getty -H alpy -n -l "/bin/ash" ttyS0 115200

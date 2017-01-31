@@ -1,0 +1,10 @@
+#!/bin/execlineb -P
+s6-envdir env
+multisubstitute {
+	import -i HOSTNAME
+	import -iu TTY
+	import -iu BAUDS
+	import -iu LOGIN
+}
+cd /
+/sbin/getty -H $HOSTNAME -n -l $LOGIN $TTY $BAUDS
