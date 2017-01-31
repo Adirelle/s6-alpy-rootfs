@@ -4,9 +4,9 @@
 cd /
 if { s6-echo "\n  initramfs (minimal)\n" }
 
-if { s6-mount -wt proc proc /proc }
-if { s6-mount -wt sysfs sysfs /sys }
-if { s6-mount -wt devtmpfs devtmpfs /dev }
+if { s6-mount -wt proc -o nosuid,noexec,nodev proc /proc }
+if { s6-mount -wt sysfs -o nosuid,noexec,nodev sysfs /sys }
+if { s6-mount -wt devtmpfs -o nosuid,noexec devtmpfs /dev }
 
 foreground { modprobe sd_mod }
 foreground { modprobe ext4 }
