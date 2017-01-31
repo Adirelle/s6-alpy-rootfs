@@ -1,2 +1,2 @@
-if { mount -o remount,ro / }
+if { mount -vo remount,ro / }
 sync
