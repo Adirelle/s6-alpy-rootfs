@@ -1,0 +1,30 @@
+#!/bin/execlineb -S0
+
+/bin/export PATH /bin:/usr/bin:/sbin:/usr/sbin
+cd /
+if { s6-echo "\n  initramfs (minimal)\n" }
+
+if { s6-mount -wt proc proc /proc }
+if { s6-mount -wt sysfs sysfs /sys }
+if { s6-mount -wt devtmpfs devtmpfs /dev }
+
+foreground { modprobe sd_mod }
+foreground { modprobe ext4 }
+foreground { modprobe ext3 }
+
+if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo /sbin/mdev }
+if { /sbin/mdev -s }
+if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo }
+
+define ROOTFS sda3
+define ROOTFSTYPE ext4
+define ROOTDIR newroot
+
+if { s6-mount -rt ${ROOTFSTYPE} /dev/${ROOTFS} /${ROOTDIR} }
+
+if { s6-mount -o move /sys /${ROOTDIR}/sys }
+if { s6-mount -o move /proc /${ROOTDIR}/proc }
+if { s6-mount -o move /dev /${ROOTDIR}/dev }
+
+switch_root /${ROOTDIR} /sbin/init $@
+

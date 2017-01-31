@@ -1,0 +1,3 @@
+/bin/kmod
+/sbin/modprobe
+/etc/modprobe.d/*

@@ -1,0 +1,13 @@
+#!/bin/execlineb -P
+cd /etc/s6-rc
+getpid N
+backtick -n PREV { readlink compiled }
+multisubstitute {
+	import -u N
+	import -u PREV
+}
+define NEW compiled.${N}
+if { s6-rc-compile ${NEW} source }
+if { ln -snf ${NEW} compiled }
+s6-rmrf ${PREV}
+

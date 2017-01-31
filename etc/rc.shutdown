@@ -1,0 +1,2 @@
+#!/bin/execlineb -S1
+s6-${1} -f
