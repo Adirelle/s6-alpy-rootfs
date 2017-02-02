@@ -7,6 +7,7 @@
 /bin/foreground
 /bin/if
 /bin/ifte
+/bin/importas
 /bin/redirfd
 /sbin/mdev
 /sbin/modprobe

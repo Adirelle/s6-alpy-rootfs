@@ -18,9 +18,10 @@ if { s6-mount -wt proc -o nosuid,noexec,nodev proc /proc }
 if { s6-mount -wt sysfs -o nosuid,noexec,nodev sysfs /sys }
 if { s6-mount -wt devtmpfs -o nosuid,noexec devtmpfs /dev }
 
-foreground { modprobe sd_mod }
-foreground { modprobe ext4 }
-foreground { modprobe ext3 }
+if {
+	importas -sd, MODULES modules
+	modprobe -a $MODULES
+}
 
 if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo /sbin/mdev }
 if { /sbin/mdev -s }
@@ -29,6 +30,7 @@ if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo }
 define ROOTFS /dev/sda3
 define ROOTFSTYPE ext4
 
+if { modprobe $ROOTFSTYPE }
 
 if { s6-mount -rt $ROOTFSTYPE $ROOTFS $ROOTDIR }
 
