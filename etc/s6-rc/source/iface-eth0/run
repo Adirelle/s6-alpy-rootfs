@@ -5,4 +5,4 @@ multisubstitute {
 	import -u IFACE
 }
 if { ifconfig $IFACE up }
-udhcpc -f -i $IFACE -F $HOSTNAME
+udhcpc -f -i $IFACE -F $HOSTNAME -s data/handler
