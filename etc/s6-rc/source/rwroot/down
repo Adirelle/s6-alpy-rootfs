@@ -1,2 +1,0 @@
-if { mount -vo remount,ro / }
-sync
