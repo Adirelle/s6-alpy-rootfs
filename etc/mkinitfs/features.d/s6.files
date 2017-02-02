@@ -6,6 +6,7 @@
 /bin/export
 /bin/foreground
 /bin/if
+/bin/ifte
 /bin/redirfd
 /sbin/mdev
 /sbin/modprobe
