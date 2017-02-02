@@ -1,5 +1,5 @@
 hostname
-hotplug
+mdev
 keymap
 modules
 sysctl
