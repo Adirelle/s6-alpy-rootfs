@@ -1,1 +1,12 @@
-mount -av
+backtick -n FS {
+	pipeline {
+		pipeline {
+			redirfd -r 0 /proc/filesystems
+			s6-grep -v nodev
+		}
+		s6-cut -f2
+	}
+	tr -s "\n" ","
+}
+import -u FS
+mount -at $FS
