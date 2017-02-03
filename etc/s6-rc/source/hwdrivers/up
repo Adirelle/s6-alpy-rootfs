@@ -1,0 +1,10 @@
+forx -o 0,1 N { 1 2 }
+backtick -i MODULES {
+	backtick -i FILES {
+		find /sys -type f -name "modalias"
+	}
+	import -sud"\n" FILES
+	sort -u $FILES
+}
+import -sud"\n" MODULES
+modprobe -baq $MODULES
