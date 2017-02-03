@@ -1,0 +1,6 @@
+#!/bin/execlineb -S3
+if {
+	if -n { test -d $1 }
+	s6-mkdir -p $1
+}
+s6-mount -t $2 -o $3 $2 $1

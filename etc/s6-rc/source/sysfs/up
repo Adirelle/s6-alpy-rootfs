@@ -1,0 +1,7 @@
+pipeline {
+	redirfd -r 0 data/fstab
+	s6-grep -v ^#
+}
+forstdin -Cd"\n" FS 
+import -suCd" \t" FS
+data/mkdir-mount $FS
