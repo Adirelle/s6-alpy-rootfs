@@ -1,23 +1,20 @@
 #!/bin/execlineb -P
-define BASE /etc/s6-rc
 
-backtick -n NOW { s6-clock } 
-backtick -n OLD { readlink ${BASE}/compiled }
+define BASE /etc/s6-rc
+define COMPILED ${BASE}/compiled
+
+backtick -n OLD { s6-linkname ${COMPILED} }
+backtick -n NEW { s6-uniquename ${COMPILED} }
 
 multisubstitute {
-	import -u NOW
 	import -u OLD
+	import -u NEW
 	importas V S6_VERBOSITY
 }
 
-define NEW ${BASE}/compiled.${NOW}
-
 if { s6-rc-compile -v${V} ${NEW} ${BASE}/source }
 
-ifelse { s6-rc-update -v${V} ${NEW} }
-{
-	foreground { ln -snf ${NEW} ${BASE}/compiled }
-	s6-rmrf ${OLD}
-}
-s6-rmrf ${NEW}
+if { s6-rc-update -v${V} ${NEW} }
+foreground { ln -snf ${NEW} ${COMPILED} }
+s6-rmrf ${OLD}
 
