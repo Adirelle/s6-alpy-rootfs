@@ -1,0 +1,2 @@
+redirfd -r 0 /etc/keymap
+loadkmap
