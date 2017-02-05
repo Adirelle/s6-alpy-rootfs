@@ -1,0 +1,4 @@
+#!/bin/execlineb -S0
+forbacktickx ROUTE { ip route show $@ }
+import -us ROUTE
+route del $ROUTE
