@@ -1,5 +1,0 @@
-/etc/apk/*
-!/etc/apk/protected_paths.d
-/etc/resolv.conf
-/etc/s6-rc/compiled*
-
