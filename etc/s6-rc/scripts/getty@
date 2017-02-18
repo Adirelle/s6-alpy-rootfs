@@ -1,0 +1,18 @@
+#!/bin/execlineb -P
+redirfd -r 0 /dev/null
+fdmove -c 2 1
+backtick -ni TTY {
+	getcwd CWD
+	import -u CWD
+	pipeline { s6-basename $CWD }
+	s6-cut -d@ -f2
+}
+s6-envdir -I env
+multisubstitute {
+	import HOSTNAME
+	import -u TTY
+	import -u -D"38400" BAUDS
+	import -D"linux" TERM
+}
+cd /
+/sbin/getty -H${HOSTNAME} -I"\27c" $BAUDS $TTY $TERM
