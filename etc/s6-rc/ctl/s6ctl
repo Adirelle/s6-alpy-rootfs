@@ -1,0 +1,34 @@
+#!/bin/execlineb 
+
+elgetopt v:l:c:s:t:
+
+multisubstitute {
+	define S6CTL_HOME /etc/s6-rc/ctl
+	importas -uD"0" VERBOSITY ELGETOPT_v
+	importas -uD"5000" TIMEOUT ELGETOPT_t
+	importas -uD"/run/s6-rc" LIVE ELGETOPT_l
+	importas -uD"/etc/s6-rc/compiled" COMPILED ELGETOPT_c
+	importas -uD"/etc/s6-rc/source" SOURCE ELGETOPT_s
+	importas -i CMD 1
+}
+
+shift
+elgetpositionals
+emptyenv
+
+s6-envdir /etc/s6-init/env
+
+export PATH ${S6CTL_HOME}/bin:/sbin:/usr/sbin:/bin:/usr/bin
+export S6_VERBOSITY $VERBOSITY
+export S6_LIVE $LIVE
+export S6_COMPILED $COMPILED
+export S6_SOURCE $SOURCE
+export S6_TIMEOUT $TIMEOUT
+
+tryexec { ${S6CTL_HOME}/bin/${CMD} $@ }
+
+foreground {
+	fdmove -c 1 2
+	echo "fatal: ${0}: unknown subcommand: ${CMD}"
+}
+exit 111

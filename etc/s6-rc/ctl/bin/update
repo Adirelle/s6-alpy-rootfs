@@ -1,0 +1,23 @@
+#!/bin/execlineb -P
+
+multisubstitute {
+	importas -iu COMPILED S6_COMPILED
+	importas -iu SOURCE S6_SOURCE
+	importas -iu LIVE S6_LIVE
+	importas -iu TIMEOUT S6_TIMEOUT
+	importas -u V S6_VERBOSITY
+}
+
+backtick -n OLD { s6-linkname $COMPILED }
+backtick -n NEW { s6-uniquename $COMPILED }
+
+multisubstitute {
+	import -u OLD
+	import -u NEW
+}
+
+if { s6-rc-compile -v${V} $NEW $SOURCE }
+if { ln -snf ${NEW} $COMPILED }
+if { s6-rc-update -v${V} -l${LIVE} -t${TIMEOUT} $NEW }
+s6-rmrf $OLD
+

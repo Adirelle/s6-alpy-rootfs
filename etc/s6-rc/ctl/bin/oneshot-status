@@ -1,0 +1,8 @@
+#!/bin/execlineb -S1
+importas -i LIVE S6_LIVE
+ifelse {
+	pipeline { s6-rc -l${LIVE} -a list }
+	redirfd -w 1 /dev/null
+	s6-grep ^${1}$
+} { s6-echo ok }
+s6-echo not ok

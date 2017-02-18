@@ -1,0 +1,26 @@
+#!/bin/execlineb
+importas -i LIVE S6_LIVE
+
+elgetopt d
+importas -uD0 WITHDEPS ELGETOPT_d
+backtick -n QUERY {
+	elgetpositionals
+	ifelse { test $# -eq 0 } {
+		s6-echo list services
+	}
+	ifelse { test $WITHDEPS = 1 } {
+		s6-echo all-dependencies $@
+	}
+	s6-echo atomics $@
+}
+import -us QUERY
+
+forbacktickx NAME {
+	pipeline { s6-rc-db -l${LIVE} $QUERY }
+	s6-sort
+}
+import -u NAME
+backtick -ni TYPE { s6-rc-db -l${LIVE} type $NAME }
+import -u TYPE
+foreground { s6-echo -n "${NAME}: " }
+${TYPE}-status $NAME

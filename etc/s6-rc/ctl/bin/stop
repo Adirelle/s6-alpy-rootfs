@@ -1,0 +1,7 @@
+#!/bin/execlineb -S0
+multisubstitute {
+	importas -iu LIVE S6_LIVE
+	importas -iu TIMEOUT S6_TIMEOUT
+	importas -u V S6_VERBOSITY
+}
+s6-rc -v${V} -l${LIVE} -t${TIMEOUT} -d change $@

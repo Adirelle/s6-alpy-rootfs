@@ -1,0 +1,3 @@
+#!/bin/execlineb -S1
+importas -i LIVE S6_LIVE
+s6-svstat ${LIVE}/scandir/${1}
