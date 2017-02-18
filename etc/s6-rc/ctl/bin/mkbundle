@@ -1,0 +1,18 @@
+#!/bin/execlineb
+multisubstitute {
+	importas -i SOURCE S6_SOURCE
+	importas -i NAME 1
+}
+define DIR ${SOURCE}/${NAME}
+
+if {
+	s6-mkdir -p $DIR
+}
+if {
+	redirfd -w 1 ${DIR}/type
+	s6-echo bundle
+}
+
+shift
+redirfd -w 1 ${DIR}/contents
+dollarat

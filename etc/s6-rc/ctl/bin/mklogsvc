@@ -1,0 +1,27 @@
+#!/bin/execlineb
+elgetopt d:
+multisubstitute {
+	importas -i SOURCE S6_SOURCE
+	importas -i NAME 1
+	import ELGETOPT_d
+}
+define DIR ${SOURCE}/${NAME}
+
+if { mklongrun -d $ELGETOPT_d ${NAME}-svc }
+if { mklongrun -d localfs ${NAME}-log }
+if {
+	redirfd -w 1 ${DIR}-svc/pipeline-name
+	s6-echo $NAME
+}
+if {
+	redirfd -w 1 ${DIR}-svc/producer-for
+	s6-echo ${NAME}-log
+}
+if {
+	redirfd -w 1 ${DIR}-log/consumer-for
+	s6-echo ${NAME}-svc
+}
+
+redirfd -a 1 ${DIR}-log/run
+s6-echo /etc/s6-rc/scripts/logger $NAME
+

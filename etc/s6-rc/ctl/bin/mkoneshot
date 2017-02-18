@@ -1,0 +1,29 @@
+#!/bin/execlineb
+elgetopt d:
+multisubstitute {
+	importas -i SOURCE S6_SOURCE
+	importas -i NAME 1
+	importas -sd",:" DEPS ELGETOPT_d
+}
+define DIR ${SOURCE}/${NAME}
+
+if {
+	s6-mkdir -p $DIR
+}
+if {
+	redirfd -w 1 ${DIR}/type
+	s6-echo oneshot
+}
+if {
+	redirfd -w 1 ${DIR}/up
+	s6-echo fdmove -c 2 1
+}
+if {
+	redirfd -w 1 ${DIR}/down
+	s6-echo fdmove -c 2 1
+}
+
+forx DEP { $DEPS }
+import -u DEP
+redirfd -a 1 ${DIR}/dependencies
+s6-echo $DEP
