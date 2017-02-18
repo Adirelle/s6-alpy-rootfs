@@ -1,7 +1,41 @@
-pipeline {
-	redirfd -r 0 data/fstab
-	s6-grep -v ^#
+forx ENTRY {
+	/dev/hugepages;hugetlbfs;defaults
+	/dev/mqueue;mqueue;defaults
+	/dev/pts;devpts;nosuid,noexec,mode=620
+	/dev/shm;tmpfs;nosuid,nodev
+	/proc/sys/fs/binfmt_misc;binfmt_misc;defaults
+	/sys/fs/cgroup;tmpfs;nosuid,nodev,noexec,mode=755
+	/sys/fs/cgroup/blkio;cgroup;nosuid,nodev,noexec,blkio
+	/sys/fs/cgroup/cpu,cpuacct;cgroup;nosuid,nodev,noexec,cpu,cpuacct
+	/sys/fs/cgroup/cpuset;cgroup;nosuid,nodev,noexec,cpuset
+	/sys/fs/cgroup/devices;cgroup;nosuid,nodev,noexec,devices
+	/sys/fs/cgroup/freezer;cgroup;nosuid,nodev,noexec,freezer
+	/sys/fs/cgroup/memory;cgroup;nosuid,nodev,noexec,memory
+	/sys/fs/cgroup/net_cls;cgroup;nosuid,nodev,noexec,net_cls
+	/sys/fs/cgroup/perf_event;cgroup;nosuid,nodev,noexec,perf_event
+	/sys/fs/cgroup/pids;cgroup;nosuid,nodev,noexec,pids
+	/sys/fs/fuse/connections;fusectl;defaults
+	/sys/fs/pstore;pstore;nosuid,nodev,noexec
+	/sys/kernel/config;configfs;defaults
+	/sys/kernel/debug;debugfs;defaults
+	/sys/kernel/security;securityfs;nosuid,nodev,noexec
 }
-forstdin -Cd"\n" FS 
-import -suCd" \t" FS
-data/mkdir-mount $FS
+import -u ENTRY
+multidefine -d; $ENTRY { MOUNTPOINT TYPE OPTIONS }
+if {
+	pipeline {
+		redirfd -r 0 /proc/filesystems
+		s6-cut -d"\t" -f2
+	}
+	redirfd -w 1 /dev/null
+	s6-grep $TYPE
+}
+foreground {
+	s6-mkdir -p -m 0000 $MOUNTPOINT
+}
+if -n {
+	pipeline { s6-cut -d" " -f2 /proc/mounts }
+	redirfd -w 1 /dev/null
+	s6-grep $MOUNTPOINT
+}
+s6-mount -t $TYPE -o $OPTIONS $TYPE $MOUNTPOINT
