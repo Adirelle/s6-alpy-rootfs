@@ -6,4 +6,4 @@ multisubstitute {
 	import -iu BAUDS
 }
 cd /
-/sbin/getty -H $HOSTNAME $TTY $BAUDS
+/sbin/getty -H $HOSTNAME $BAUDS $TTY linux

@@ -3,6 +3,7 @@ s6-envdir env
 multisubstitute {
 	import -iu TTY
 	import -iu BAUDS
+	import -D"linux" TERM
 }
 cd /
-/sbin/getty $TTY $BAUDS
+getty $BAUDS $TTY $TERM
