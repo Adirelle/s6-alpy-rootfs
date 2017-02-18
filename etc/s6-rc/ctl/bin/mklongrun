@@ -12,7 +12,7 @@ if {
 }
 if {
 	redirfd -w 1 ${DIR}/type
-	s6-echo oneshot
+	s6-echo longrun
 }
 if {
 	redirfd -w 1 ${DIR}/run
