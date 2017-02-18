@@ -1,0 +1,11 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+s6-envdir env
+multisubstitute {
+	import -ui IP
+	import -ui PORT
+}
+fdmove 1 3
+s6-tcpserver -v -1 -- $IP $PORT
+s6-tcpserver-access -v 2 -DRl0 -t 5000 -i data/rules --
+dropbear -i -K 60

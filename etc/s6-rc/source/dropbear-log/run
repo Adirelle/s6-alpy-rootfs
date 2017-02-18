@@ -1,0 +1,3 @@
+#!/bin/execlineb -P
+exec -c
+s6-log t "/var/log/dropbear"
