@@ -1,0 +1,7 @@
+#!/bin/execlineb -S1
+cd /etc/s6-rc/scripts/udhcpc
+ifelse { test -x ./on-${1} } {
+	./on-${1}
+}
+foreground { echo "Unhandled event ${1}" }
+exit 111
