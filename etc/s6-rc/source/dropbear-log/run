@@ -1,3 +1,2 @@
 #!/bin/execlineb -P
-exec -c
-s6-log t "/var/log/dropbear"
+/etc/s6-rc/scripts/logger dropbear
