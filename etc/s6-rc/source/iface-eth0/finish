@@ -1,5 +1,6 @@
 #!/bin/execlineb -P
+fdmove -c 2 1
 s6-envdir env
-export interface IFACE
 foreground { data/handler deconfig }
-ifconfig ${IFACE} down
+import -i interface
+ifconfig $interface down
