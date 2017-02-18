@@ -16,7 +16,7 @@ if {
 }
 if {
 	redirfd -w 1 ${DIR}/run
-	s6-echo "#/bin/execlineb -P\nfdmove -c 2 1"
+	s6-echo "#!/bin/execlineb -P\nfdmove -c 2 1"
 }
 if {
 	s6-chmod 0755 ${DIR}/run
