@@ -13,8 +13,7 @@ multisubstitute {
 }
 
 if { s6-rc-compile -v${V} ${NEW} ${BASE}/source }
-
-if { s6-rc-update -v${V} ${NEW} }
-foreground { ln -snf ${NEW} ${COMPILED} }
+if { ln -snf ${NEW} ${COMPILED} }
+if { s6-rc-update -v${V} -t5000 ${NEW} }
 s6-rmrf ${OLD}
 
