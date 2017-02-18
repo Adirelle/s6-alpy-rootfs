@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+backtick -i PEERS { s6-dnsip4 -r pool.ntp.org }
+import -su PEERS
+ntpd -n -p${PEERS}
