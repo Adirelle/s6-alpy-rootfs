@@ -1,2 +1,3 @@
 #!/bin/execlineb -S0
-s6-rc -u change $@
+importas V S6_VERBOSITY
+s6-rc -v${V} -t5000 -u change $@
