@@ -1,0 +1,3 @@
+#!/bin/execlineb -S0
+foreground { s6-rc-stop $@ }
+s6-rc-start $@
