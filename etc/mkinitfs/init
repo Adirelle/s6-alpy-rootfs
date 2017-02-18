@@ -27,7 +27,7 @@ if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo /sbin/mdev }
 if { /sbin/mdev -s }
 if { redirfd -w 1 /proc/sys/kernel/hotplug s6-echo }
 
-define ROOTFS /dev/sda2
+define ROOTFS /dev/sda3
 define ROOTFSTYPE ext4
 
 if { modprobe $ROOTFSTYPE }
