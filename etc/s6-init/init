@@ -7,6 +7,7 @@ umask 022
 if { s6-echo -- "\n  init created by s6-linux-init-maker\n  see http://skarnet.org/software/s6-linux-init/\n\n" }
 if { s6-mount -nwt tmpfs -o mode=0755 tmpfs /run }
 if { s6-hiercopy /etc/s6-init/run-image /run }
+if { s6-mkfifo -m 0600 /run/service/s6-svscan-log/fifo }
 emptyenv -p
 s6-envdir -I -- /etc/s6-init/env
 redirfd -r 0 /dev/null
