@@ -1,0 +1,6 @@
+#!/bin/execlineb -S0
+tryexec {
+	import -i HOME
+	${HOME}/.execline-shell $@
+}
+/bin/sh $@
