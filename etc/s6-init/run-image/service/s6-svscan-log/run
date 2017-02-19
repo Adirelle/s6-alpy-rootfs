@@ -1,7 +1,14 @@
 #!/bin/execlineb -P
-
 redirfd -w 2 /dev/console
 redirfd -w 1 /dev/null
+
+define LOGDIR /run/uncaught-logs
+s6-envuidgid log
+
+if { s6-mkdir -m 0750 -p $LOGDIR }
+if { s6-chown -U $LOGDIR }
+
 redirfd -rnb 0 fifo
-s6-applyuidgid -u 0 -g 0 --
-s6-log -bp -- t "/run"/uncaught-logs
+s6-applyuidgid -Uz --
+exec -c --
+s6-log -bp -- $LOGDIR

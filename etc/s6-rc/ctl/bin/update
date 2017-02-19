@@ -16,7 +16,7 @@ multisubstitute {
 	import -u NEW
 }
 
-if { s6-rc-compile -v${V} $NEW $SOURCE }
+if { s6-rc-compile -v${V} -h fdholder $NEW $SOURCE }
 if { ln -snf ${NEW} $COMPILED }
 if { s6-rc-update -v${V} -l${LIVE} -t${TIMEOUT} $NEW }
 s6-rmrf $OLD
