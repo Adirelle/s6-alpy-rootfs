@@ -1,14 +1,32 @@
 #!/bin/execlineb 
 
-elgetopt v:l:c:s:t:
+backtick -ni S6CTL_HOME {
+	importas SELF 0
+	pipeline { s6-linkname -f $SELF }
+	withstdinas -n TARGET
+	import -u TARGET
+	s6-dirname $TARGET
+}
+import S6CTL_HOME
+import HOME
 
+s6-envdir /etc/s6-init/env
+s6-envdir -I ${HOME}/.s6ctl-env
 multisubstitute {
-	define S6CTL_HOME /etc/s6-rc/ctl
-	importas -uD"0" VERBOSITY ELGETOPT_v
-	importas -uD"5000" TIMEOUT ELGETOPT_t
-	importas -uD"/run/s6-rc" LIVE ELGETOPT_l
-	importas -uD"/etc/s6-rc/compiled" COMPILED ELGETOPT_c
-	importas -uD"/etc/s6-rc/source" SOURCE ELGETOPT_s
+	importas -uD"0" DEF_VERBOSITY S6_VERBOSITY
+	importas -uD"5000" DEF_TIMEOUT S6_TIMEOUT
+	importas -uD"/run/s6-rc" DEF_LIVE S6_LIVE
+	importas -uD"/etc/s6-rc/compiled" DEF_COMPILED S6_COMPILED
+	importas -uD"/etc/s6-rc/source" DEF_SOURCE S6_SOURCE
+}
+
+elgetopt v:l:c:s:t:
+multisubstitute {
+	importas -u -D${DEF_VERBOSITY} VERBOSITY ELGETOPT_v
+	importas -u -D${DEF_TIMEOUT} TIMEOUT ELGETOPT_t
+	importas -u -D${DEF_LIVE} LIVE ELGETOPT_l
+	importas -u -D${DEF_COMPILED} COMPILED ELGETOPT_c
+	importas -u -D${DEF_SOURCE} SOURCE ELGETOPT_s
 	importas -i CMD 1
 }
 
@@ -16,9 +34,9 @@ shift
 elgetpositionals
 emptyenv
 
-s6-envdir /etc/s6-init/env
-
 export PATH ${S6CTL_HOME}/bin:/sbin:/usr/sbin:/bin:/usr/bin
+
+export S6CTL_HOME $S6CTL_HOME
 export S6_VERBOSITY $VERBOSITY
 export S6_LIVE $LIVE
 export S6_COMPILED $COMPILED
@@ -26,7 +44,6 @@ export S6_SOURCE $SOURCE
 export S6_TIMEOUT $TIMEOUT
 
 tryexec { ${S6CTL_HOME}/bin/${CMD} $@ }
-
 foreground {
 	fdmove -c 1 2
 	echo "fatal: ${0}: unknown subcommand: ${CMD}"
