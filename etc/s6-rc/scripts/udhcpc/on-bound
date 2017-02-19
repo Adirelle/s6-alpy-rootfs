@@ -4,34 +4,34 @@ import -ui interface
 
 if {
 	import -ui ip
-	foreground { echo "Address: ${ip}" }
+	foreground { s6-echo "Address: ${ip}" }
 	ifconfig ${interface} ${ip}
 }
 
 foreground {
 	import -ui subnet
-	foreground { echo "Netmask: ${subnet}" }
+	foreground { s6-echo "Netmask: ${subnet}" }
 	ifconfig ${interface} netmask ${subnet}
 }
 
 foreground {
 	import -ui broadcast
-	foreground { echo "Broadcast: ${broadcast}" }
+	foreground { s6-echo "Broadcast: ${broadcast}" }
 	ifconfig ${interface} broadcast ${broadcast}
 }
 
 foreground {
 	import -ui router
-	foreground { ./clear-routes 0.0.0.0 }
-	foreground { echo "Router: ${router}" }
+	foreground { s6-echo "Router: ${router}" }
+	if { clear-routes 0.0.0.0 }
 	ip route add default via ${router} dev ${interface} metric 1024
 }
 
 foreground {
 	import -uis dns
-	foreground { echo "Nameservers: $dns" }
+	foreground { s6-echo "Nameservers: $dns" }
 	redirfd -w 1 /etc/resolv.conf
-	echo "nameserver ${dns}\n"
+	s6-echo "nameserver ${dns}\n"
 }
 
 fdmove 1 3
