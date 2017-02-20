@@ -3,3 +3,4 @@ klogd
 ntpd
 ttys
 dropbear
+dnscache

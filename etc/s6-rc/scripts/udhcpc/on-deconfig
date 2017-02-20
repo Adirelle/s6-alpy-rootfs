@@ -1,5 +1,6 @@
 #!/bin/execlineb -P
 import -ui interface
 foreground { ifconfig ${interface} 0.0.0.0 }
-clear-routes dev ${interface}
+foreground { clear-routes dev ${interface} }
+/etc/s6-rc/scripts/set-resolvconf-fragment 50-dhcp-${interface}-ns ""
 

@@ -1,0 +1,15 @@
+#!/bin/execlineb
+s6-envdir /run/service/resolvconf/env
+import -iu WORKDIR
+importas -i FRAGMENT 1
+importas -uD "" CONTENT 2
+
+if {
+	ifelse { test -n "$CONTENT" } {
+		redirfd -w 1 ${WORKDIR}/fragments/${FRAGMENT}
+		s6-echo $CONTENT
+	} 
+	rm -f ${WORKDIR}/fragments/${FRAGMENT}
+}
+s6-ftrig-notify ${WORKDIR} .
+
