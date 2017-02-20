@@ -1,0 +1,6 @@
+#!/bin/execlineb
+importas -ui interface 1
+export interface $interface
+s6-envdir /etc/network/interfaces/${interface}
+if { ifconfig $interface up }
+/etc/network/scripts/config

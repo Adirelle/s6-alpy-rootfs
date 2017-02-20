@@ -1,0 +1,54 @@
+#!/bin/execlineb -P
+
+multisubstitute {
+	import -ui interface
+	import -ui ip
+	import -uD "" subnet
+	import -uD "" broadcast
+	import -uD "" router
+	import -uD "" dns
+	import -uD "" domain
+}
+
+if {
+	foreground { s6-echo Address: $ip }
+	ifconfig $interface $ip
+}
+
+foreground {
+	if -t { test -n $subnet }
+	foreground { s6-echo "Netmask: ${subnet}" }
+	ifconfig $interface netmask $subnet
+}
+
+foreground {
+	if -t { test -n $broadcast }
+	foreground { s6-echo "Broadcast: ${broadcast}" }
+	ifconfig $interface broadcast $broadcast
+}
+
+foreground {
+	if -t { test -n $router }
+	foreground { s6-echo "Router: ${router}" }
+	if { /etc/network/scripts/clear-routes 0.0.0.0 }
+	if { ip route add default via $router dev $interface metric 1024 }
+	s6-echo "Added route: default via ${router} dev ${interface} metric 1024"
+}
+
+foreground {
+	ifelse { test -n $dns } {
+		foreground { s6-echo "Nameservers: ${dns}" }
+		/etc/resolvconf/scripts/set-fragment 50-${interface}-ns "nameserver ${dns}"
+	}
+	/etc/resolvconf/scripts/set-fragment 50-${interface}-ns ""
+}
+
+foreground {
+	ifelse { test -n $domain } {
+		foreground { s6-echo "Domain: ${domain}" }
+		/etc/resolvconf/scripts/set-fragment 50-${interface}-domain "domain ${domain}"
+	}
+	/etc/resolvconf/scripts/set-fragment 50-${interface}-domain ""
+}
+
+exit 0
