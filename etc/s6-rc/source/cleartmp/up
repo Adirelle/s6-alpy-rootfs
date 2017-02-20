@@ -1,0 +1,4 @@
+fdmove -c 2 1
+forbacktickx -n0 TMP { s6-ls -a0 /tmp }
+import -ui TMP
+s6-rmrf /tmp/${TMP}
