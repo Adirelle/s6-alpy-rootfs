@@ -1,13 +1,12 @@
 #!/bin/execlineb -P
 fdmove -c 2 1
-redirfd -r 0 /dev/null
 
 /etc/s6-rc/scripts/resolvconf/in-workdir
 
 foreground {
 	s6-setlock -w lock
 	redirfd -w 1 resolv.conf
-	foreground { s6-echo "# Do not edit: any change will be lost\n"
+	foreground { s6-echo "# Do not edit: any change will be lost" }
 	forbacktickx FRAGMENT { s6-ls fragments }
 	import -u FRAGMENT
 	foreground { s6-echo "\n# from ${FRAGMENT}:" }
@@ -15,9 +14,11 @@ foreground {
 	s6-cat
 }
 
-fdmove 1 3
-foreground { s6-echo ready }
-fdclose 1
+foreground {
+	fdmove 1 3
+	s6-echo ready
+}
+fdclose 3
 
 redirfd -w 1 /dev/null
 s6-ftrig-wait notify .

@@ -1,11 +1,11 @@
 #!/bin/execlineb -S0
 
-s6-envdir /run/service/resolvconf-svc/env
+backtick -ni WORKDIR { s6-linkname /etc/resolvconf/live }
 import -iu WORKDIR
 
 if {
 	if -nt { s6-test -d $WORKDIR }
-	s6-hiercopy /etc/s6-rc/scripts/resolvconf/run-image $WORKDIR
+	s6-hiercopy /etc/resolvconf/run-image $WORKDIR
 }
 
 cd $WORKDIR
