@@ -4,5 +4,6 @@ ifelse {
 	pipeline { s6-rc -l${LIVE} -a list }
 	redirfd -w 1 /dev/null
 	s6-grep ^${1}$
-} { s6-echo ok }
-s6-echo not ok
+}
+{ s6-echo "\27[32mok\27[0m" }
+s6-echo "\27[31mnot ok\27[0m"

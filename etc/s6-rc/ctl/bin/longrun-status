@@ -1,3 +1,26 @@
 #!/bin/execlineb -S1
 importas -i LIVE S6_LIVE
-s6-svstat ${LIVE}/scandir/${1}
+
+pipeline {
+	s6-svstat ${LIVE}/scandir/${1}
+}
+
+withstdinas -n STATUSLINE
+import -u STATUSLINE
+
+foreground {
+	ifelse {
+		redirfd -w 1 /dev/null
+		heredoc 0 $STATUSLINE
+		s6-grep ^up
+	} {
+		s6-echo -n "\27[32m"
+	}
+	s6-echo -n "\27[31m"
+}
+
+foreground {
+	s6-echo -n $STATUSLINE
+}
+
+s6-echo "\27[0m"
