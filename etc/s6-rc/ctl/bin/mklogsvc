@@ -3,11 +3,11 @@ elgetopt d:
 multisubstitute {
 	importas -i SOURCE S6_SOURCE
 	importas -i NAME 1
-	import ELGETOPT_d
+	importas -uD "" DEPS ELGETOPT_d
 }
 define DIR ${SOURCE}/${NAME}
 
-if { mklongrun -d $ELGETOPT_d ${NAME}-svc }
+if { mklongrun -d $DEPS ${NAME}-svc }
 if { mklongrun -d localfs ${NAME}-log }
 if {
 	redirfd -w 1 ${DIR}-svc/pipeline-name
@@ -23,5 +23,5 @@ if {
 }
 
 redirfd -a 1 ${DIR}-log/run
-s6-echo /etc/s6-rc/scripts/logger $NAME
+s6-echo "/etc/s6-rc/scripts/logger ${NAME}"
 
