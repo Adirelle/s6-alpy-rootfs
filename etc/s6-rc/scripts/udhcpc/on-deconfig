@@ -2,5 +2,6 @@
 import -ui interface
 foreground { ifconfig ${interface} 0.0.0.0 }
 foreground { clear-routes dev ${interface} }
-/etc/s6-rc/scripts/set-resolvconf-fragment 50-dhcp-${interface}-ns ""
+foreground { /etc/s6-rc/scripts/resolvconf/set-fragment 50-dhcp-${interface}-ns "" }
+foreground { /etc/s6-rc/scripts/resolvconf/set-fragment 50-dhcp-${interface}-domain "" }
 

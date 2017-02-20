@@ -1,0 +1,12 @@
+#!/bin/execlineb -S0
+
+s6-envdir /run/service/resolvconf/env
+import -iu WORKDIR
+
+if {
+	if -nt { s6-test -d $WORKDIR }
+	s6-hiercopy /etc/s6-rc/scripts/resolvconf/run-image $WORKDIR
+}
+
+cd $WORKDIR
+$@

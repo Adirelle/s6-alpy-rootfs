@@ -1,30 +1,22 @@
 #!/bin/execlineb -P
 fdmove -c 2 1
 redirfd -r 0 /dev/null
-s6-envdir env
-import -u WORKDIR
-import -u USER
 
-s6-envuidgid $USER
-if {
-	import GID
-	s6-mkfifodir -g $GID -f ${WORKDIR}
-}
-if {
-	s6-mkdir -p ${WORKDIR}/fragments
-}
-
-s6-applyuidgid
-
+/etc/s6-rc/scripts/resolvconf/in-workdir
 
 foreground {
-	redirfd -w 1 ${WORKDIR}/resolv.conf
-	forbacktickx FRAGMENT { s6-ls ${WORKDIR}/fragments }
+	s6-setlock -w lock
+	redirfd -w 1 resolv.conf
+	forbacktickx FRAGMENT { s6-ls fragments }
 	import -u FRAGMENT
-	redirfd -r 0 ${WORKDIR}/fragments/${FRAGMENT}
+	redirfd -r 0 fragments/${FRAGMENT}
 	s6-cat
 }
 
+fdmove 1 3
+foreground { s6-echo ready }
+fdclose 1
+
 redirfd -w 1 /dev/null
-s6-ftrig-wait ${WORKDIR} .
+s6-ftrig-wait notify .
 

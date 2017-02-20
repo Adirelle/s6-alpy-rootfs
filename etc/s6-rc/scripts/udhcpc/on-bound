@@ -29,8 +29,14 @@ foreground {
 
 foreground {
 	import -us -D "" dns
-	foreground { s6-echo "Nameservers: $dns" }
-	/etc/s6-rc/scripts/set-revolvconf-fragment 50-dhcp-${interface}-ns "nameserver ${dns}"
+	foreground { s6-echo "Nameservers: ${dns}" }
+	/etc/s6-rc/scripts/resolvconf/set-fragment 50-dhcp-${interface}-ns "nameserver ${dns}"
+}
+
+foreground {
+	import -us -D "" domain
+	foreground { s6-echo "Domain: ${domain}" }
+	/etc/s6-rc/scripts/resolvconf/set-fragment 50-dhcp-${interface}-domain "domain ${domain}"
 }
 
 fdmove 1 3

@@ -1,0 +1,17 @@
+#!/bin/execlineb
+
+importas -i FRAGMENT 1
+importas -uD "" CONTENT 2
+
+/etc/s6-rc/scripts/resolvconf/in-workdir
+
+s6-setlock -r lock
+if {
+	ifelse { test -n "$CONTENT" } {
+		redirfd -w 1 fragments/${FRAGMENT}
+		s6-echo $CONTENT
+	} 
+	rm -f fragments/${FRAGMENT}
+}
+s6-ftrig-notify notify .
+
