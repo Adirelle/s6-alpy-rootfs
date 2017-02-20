@@ -1,6 +1,6 @@
 #!/bin/execlineb -P
 backtick -ni COMPILED { readlink /etc/s6-rc/compiled }
 import -u COMPILED
-if { s6-rc-init -c ${COMPILED} /run/service }
+if { s6-rc-init -c ${COMPILED} -t 1000 /run/service }
 importas V S6_VERBOSITY
-s6-rc -v${V} -u change default
+s6-rc -v${V} -t 20000 -u change default
