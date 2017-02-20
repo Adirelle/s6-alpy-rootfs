@@ -3,7 +3,7 @@
 importas -i FRAGMENT 1
 importas -uD "" CONTENT 2
 
-/etc/s6-rc/scripts/resolvconf/in-workdir
+/etc/resolvconf/scripts/in-workdir
 
 s6-setlock -r lock
 if {

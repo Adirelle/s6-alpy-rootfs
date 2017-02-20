@@ -1,7 +1,7 @@
 #!/bin/execlineb -P
 fdmove -c 2 1
 
-/etc/s6-rc/scripts/resolvconf/in-workdir
+/etc/resolvconf/scripts/in-workdir
 
 foreground {
 	s6-setlock -w lock
