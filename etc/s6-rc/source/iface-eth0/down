@@ -1,1 +1,1 @@
-ifconfig eth0 down
+/etc/network/scripts/down eth0

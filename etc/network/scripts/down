@@ -1,0 +1,5 @@
+#!/bin/execlineb
+importas -ui interface 1
+export interface $interface
+if { /etc/network/scripts/deconfig }
+ifconfig $interface down

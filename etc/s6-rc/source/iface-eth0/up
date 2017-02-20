@@ -1,1 +1,1 @@
-ifconfig eth0 up
+/etc/network/scripts/up eth0

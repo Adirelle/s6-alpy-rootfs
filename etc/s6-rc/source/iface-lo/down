@@ -1,1 +1,1 @@
-ifconfig lo down
+/etc/network/scripts/down lo
