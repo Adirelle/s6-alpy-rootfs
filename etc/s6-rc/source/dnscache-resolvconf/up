@@ -1,2 +1,0 @@
-fdmove -c 2 1
-/etc/s6-rc/scripts/resolvconf/set-fragment 10-dnscache "nameserver 127.0.0.1"

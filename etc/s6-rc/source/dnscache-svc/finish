@@ -1,0 +1,2 @@
+#!/bin/execlineb -P
+/etc/s6-rc/scripts/resolvconf/set-fragment 10-dnscache ""

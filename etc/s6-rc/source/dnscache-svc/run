@@ -6,7 +6,12 @@ import -u CWD
 export ROOT ${CWD}/data
 
 s6-envdir env
-s6-envuidgid dnscache
+foreground {
+	import -u IP
+	/etc/s6-rc/scripts/resolvconf/set-fragment 10-dnscache "nameserver ${IP}"
+}
+
 redirfd -r 0 data/seed
+s6-envuidgid dnscache
 
 dnscache
