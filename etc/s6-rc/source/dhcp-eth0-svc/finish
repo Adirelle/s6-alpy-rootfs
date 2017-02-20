@@ -1,0 +1,4 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+s6-envdir env
+/etc/s6-rc/scripts/udhcp/handler deconfig

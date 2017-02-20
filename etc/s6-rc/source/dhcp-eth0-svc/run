@@ -6,5 +6,4 @@ multisubstitute {
 	import HOSTNAME
 	import -i interface
 }
-if { ifconfig $interface up }
 udhcpc -f -R -i $interface -F $HOSTNAME -s /etc/s6-rc/scripts/udhcpc/handler
