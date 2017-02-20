@@ -1,6 +1,5 @@
 syslogd
 klogd
 ntpd
-ttys
 dropbear
 dnscache
