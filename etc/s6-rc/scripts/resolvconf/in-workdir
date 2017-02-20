@@ -1,6 +1,6 @@
 #!/bin/execlineb -S0
 
-s6-envdir /run/service/resolvconf/env
+s6-envdir /run/service/resolvconf-svc/env
 import -iu WORKDIR
 
 if {
