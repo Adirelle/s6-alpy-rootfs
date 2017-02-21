@@ -1,9 +1,2 @@
 #!/bin/execlineb -P
-redirfd -r 0 /dev/null
-fdmove -c 2 1
-s6-envdir env
-multisubstitute {
-	import HOSTNAME
-	import -i interface
-}
-udhcpc -f -R -i $interface -F $HOSTNAME -s /etc/s6-rc/scripts/udhcpc/handler
+/etc/udhcpc/scripts/run eth0

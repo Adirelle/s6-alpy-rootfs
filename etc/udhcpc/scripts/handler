@@ -1,0 +1,4 @@
+#!/bin/execlineb -S1
+tryexec { /etc/udhcpc/scripts/on-${1} }
+foreground { echo "Unhandled event ${1}" }
+exit 111
