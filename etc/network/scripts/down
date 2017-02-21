@@ -1,5 +1,9 @@
 #!/bin/execlineb
 importas -ui interface 1
 export interface $interface
-if { /etc/network/scripts/deconfig }
+s6-envdir /etc/network/interfaces/${interface}
+foreground {
+	if -t { import -ui type test $type = static }
+	/etc/network/scripts/deconfig
+}
 ifconfig $interface down

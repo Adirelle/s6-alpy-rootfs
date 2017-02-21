@@ -1,4 +1,4 @@
-#!/bin/execlineb 
+#!/bin/execlineb
 fdclose 0
 fdmove -c 2 1
 

@@ -3,4 +3,5 @@ importas -ui interface 1
 export interface $interface
 s6-envdir /etc/network/interfaces/${interface}
 if { ifconfig $interface up }
+if -t { import -ui type test $type = static }
 /etc/network/scripts/config
