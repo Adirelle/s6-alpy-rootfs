@@ -1,0 +1,12 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+fdclose 0
+define CHROOT /run/deadwood
+
+s6-envuidgid deadwood
+if { s6-mkdir -p $CHROOT }
+if { s6-chown -U $CHROOT }
+if { s6-chmod 0700 $CHROOT }
+
+exec -c
+/usr/local/sbin/Deadwood -f /etc/deadwoood.conf
