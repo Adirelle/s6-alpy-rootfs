@@ -1,0 +1,3 @@
+#!/bin/execlineb -S0
+if { tinydns-edit data data.new add $@ }
+/usr/bin/tinydns-data
