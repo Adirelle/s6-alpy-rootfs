@@ -1,4 +1,4 @@
-dhcp-eth0
+iface-eth0
 iface-lo
 dropbear
 dnscache

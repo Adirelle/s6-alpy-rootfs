@@ -1,3 +1,0 @@
-#!/bin/execlineb -P
-export interface eth0
-/etc/udhcpc/scripts/on-deconfig

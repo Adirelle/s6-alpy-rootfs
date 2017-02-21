@@ -1,2 +1,0 @@
-#!/bin/execlineb -P
-/etc/s6-rc/scripts/logger dhcp-eth0
