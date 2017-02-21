@@ -3,3 +3,4 @@ klogd
 ntpd
 dropbear
 dnscache
+tinydns
