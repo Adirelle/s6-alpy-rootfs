@@ -1,0 +1,2 @@
+#!/bin/execlineb -P
+/etc/resolvconf/scripts/set-fragment 10-deadwood ""

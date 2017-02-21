@@ -8,5 +8,7 @@ if { s6-mkdir -p $CHROOT }
 if { s6-chown -U $CHROOT }
 if { s6-chmod 0700 $CHROOT }
 
+if { /etc/resolvconf/scripts/set-fragment 10-deadwood "nameserver 127.0.0.1" }
+
 exec -c
 /usr/local/sbin/Deadwood -f /etc/deadwoood.conf
