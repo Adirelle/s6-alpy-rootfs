@@ -2,5 +2,3 @@ syslogd
 klogd
 ntpd
 dropbear
-dnscache
-tinydns

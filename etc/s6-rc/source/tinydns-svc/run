@@ -1,7 +1,0 @@
-#!/bin/execlineb -P
-fdmove -c 2 1
-
-exec -c
-s6-envdir /etc/tinydns/env
-s6-envuidgid tinydns
-tinydns
