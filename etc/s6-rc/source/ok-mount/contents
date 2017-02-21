@@ -1,0 +1,4 @@
+mount-disks
+mount-rwroot
+mount-swap
+mount-sysfs

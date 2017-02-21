@@ -7,7 +7,10 @@ foreground {
 	/etc/resolvconf/scripts/set-fragment 10-dnscache "nameserver ${IP}"
 }
 
-redirfd -r 0 /etc/dnscache/seed
 s6-envuidgid dnscache
 
+pipeline {
+	redirfd -r 0 /dev/urandom
+	s6-head -c 128
+}
 dnscache

@@ -1,0 +1,8 @@
+init-cleartmp
+init-hostname
+init-hwdrivers
+init-keymap
+init-mdev
+init-modules
+init-sysctl
+init-urandom

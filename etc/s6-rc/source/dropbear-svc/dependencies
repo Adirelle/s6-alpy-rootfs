@@ -1,2 +1,2 @@
-network
-urandom
+init-urandom
+ok-mount
