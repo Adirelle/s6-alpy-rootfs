@@ -8,7 +8,7 @@ multisubstitute {
 define DIR ${SOURCE}/${NAME}
 
 if { mklongrun -d $DEPS ${NAME}-svc }
-if { mklongrun -d localfs ${NAME}-log }
+if { mklongrun ${NAME}-log }
 if {
 	redirfd -w 1 ${DIR}-svc/pipeline-name
 	s6-echo $NAME
@@ -21,7 +21,10 @@ if {
 	redirfd -w 1 ${DIR}-log/consumer-for
 	s6-echo ${NAME}-svc
 }
+if {
+	s6-ln -s /etc/s6-rc/scripts/logger/dependencies ${NAME}-log/dependencies
+}
 
 redirfd -a 1 ${DIR}-log/run
-s6-echo "/etc/s6-rc/scripts/logger ${NAME}"
+s6-echo "/etc/s6-rc/scripts/logger/run ${NAME}"
 
