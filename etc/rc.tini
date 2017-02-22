@@ -1,6 +1,4 @@
 #!/bin/execlineb -P
 cd /
-redirfd -w 2 /dev/console
-fdmove -c 1 2
 importas V S6_VERBOSITY
 s6-rc -v${V} -t 5000 -da change

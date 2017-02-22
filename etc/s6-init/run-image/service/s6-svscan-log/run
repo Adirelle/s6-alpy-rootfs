@@ -11,4 +11,6 @@ if { s6-chown -U $LOGDIR }
 redirfd -rnb 0 fifo
 s6-applyuidgid -Uz --
 exec -c --
-s6-log -bp -- $LOGDIR
+s6-log -bp --
+	t $LOGDIR
+	-. +fatal|error T 2
