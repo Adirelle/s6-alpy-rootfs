@@ -1,2 +1,1 @@
-#!/bin/execlineb -P
-/etc/s6-rc/scripts/logger dropbear
+/etc/s6-rc/scripts/logger/run
