@@ -1,2 +1,13 @@
-#!/bin/execlineb -P
-/etc/s6-rc/scripts/logger/run syslogd
+#!/bin/execlineb
+fdmove -c 2 1
+
+importas -i LOG 1
+define LOGDIR /var/log/${LOG}
+s6-envuidgid log
+
+if { s6-mkdir -m 0750 -p $LOGDIR }
+if { s6-chown -U $LOGDIR }
+
+s6-applyuidgid -U --
+exec -c --
+s6-log t n20 s1000000 -- $LOGDIR
