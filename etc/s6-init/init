@@ -16,7 +16,7 @@ background
 {
   s6-setsid --
   redirfd -w 1 /run/service/s6-svscan-log/fifo
-  fdmove -c 1 2
+  fdmove -c 2 1
   /etc/rc.init
 }
 unexport !
