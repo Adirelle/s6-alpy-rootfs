@@ -7,7 +7,7 @@ foreground {
 	s6-setlock -w lock
 	redirfd -w 1 resolv.conf
 	foreground { s6-echo "# Do not edit: any change will be lost" }
-	forbacktickx FRAGMENT { s6-ls fragments }
+	forbacktickx FRAGMENT { pipeline { s6-ls fragments } s6-sort }
 	import -u FRAGMENT
 	foreground { s6-echo "\n# from ${FRAGMENT}:" }
 	redirfd -r 0 fragments/${FRAGMENT}
