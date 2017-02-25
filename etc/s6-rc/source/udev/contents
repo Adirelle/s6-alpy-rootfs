@@ -1,0 +1,4 @@
+udev-daemon
+udev-log
+udev-monitor
+udev-coldplug

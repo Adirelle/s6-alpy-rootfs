@@ -2,7 +2,7 @@ init-cleartmp
 init-hostname
 init-hwdrivers
 init-keymap
-init-udevd
+udev
 init-modules
 init-sysctl
 init-urandom
