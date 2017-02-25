@@ -1,0 +1,5 @@
+#!/bin/execlineb -P
+fdmove -c 2 1
+fdclose 0
+foreground { s6-mkdir -p /run/dbus }
+dbus-daemon --system --nofork
