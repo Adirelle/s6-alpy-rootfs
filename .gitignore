@@ -1,0 +1,6 @@
+*
+!/etc
+/etc/*
+!/etc/s6-rc
+/etc/s6-rcÂcompiled*
+!/etc/s6-init
