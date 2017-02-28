@@ -1,6 +1,6 @@
-dhcp-eth0
+dhcp-eth0-svc
 iface-lo
-dropbear
-dnscache
-resolvconf
-ntpd
+dropbear-svc
+dnscache-svc
+resolvconf-svc
+ntpd-svc

@@ -1,5 +1,5 @@
-klogd
-syslogd
+klogd-svc
+syslogd-svc
 getty@tty2
 getty@tty3
 getty@tty4
